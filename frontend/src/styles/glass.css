@@ -1,0 +1,513 @@
+/* ============ 玻璃拟态页面背景 ============
+   主题组件样式全部由 src/glassTheme.ts 驱动，
+   此处仅提供让半透明面板可见的浅色渐变底。 */
+
+body {
+  background:
+    radial-gradient(ellipse 620px 420px at 15% 18%, rgba(129,140,248,0.7), transparent),
+    radial-gradient(ellipse 520px 400px at 85% 22%, rgba(56,189,248,0.6), transparent),
+    radial-gradient(ellipse 560px 440px at 50% 88%, rgba(244,114,182,0.55), transparent),
+    radial-gradient(ellipse 480px 360px at 30% 65%, rgba(52,211,153,0.4), transparent),
+    linear-gradient(135deg, #e0e7ff 0%, #f0f9ff 50%, #fdf2f8 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* 布局容器透明，透出渐变底 */
+.app-layout,
+.app-layout .ant-layout,
+.app-layout .ant-layout-content {
+  background: transparent !important;
+}
+
+/* 登录页玻璃卡片容器 */
+.login-glass-card {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(31, 56, 88, 0.12);
+}
+
+/* ============ 弹窗/抽屉玻璃补强 ============
+   v6 Semantic DOM：container = 弹窗面板本体。
+   glassTheme.ts 中 modalContainer 显式 backdropFilter:'none'，
+   为达到参考图的磨砂效果，在页面层补（不改主题文件）。 */
+.ant-modal .ant-modal-container,
+.ant-modal .ant-modal-content {
+  background: color-mix(in srgb, #ffffff 55%, transparent) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow:
+    0 8px 24px rgba(85, 85, 85, 0.1),
+    inset 0 0 5px 2px rgba(255, 255, 255, 0.3),
+    inset 0 5px 2px rgba(255, 255, 255, 0.2) !important;
+}
+
+.ant-modal .ant-modal-header {
+  background: transparent;
+}
+
+.ant-drawer .ant-drawer-content {
+  background: color-mix(in srgb, #ffffff 70%, transparent) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* 弹窗内表单 label 禁止换行 */
+.ant-modal .ant-form-item-label > label {
+  white-space: nowrap;
+}
+
+/* ============ 提示组件圆角 ============ */
+.ant-alert {
+  border-radius: 12px !important;
+}
+.ant-notification .ant-notification-notice,
+.ant-message .ant-message-notice-content,
+.ant-popover .ant-popover-inner,
+.ant-tooltip .ant-tooltip-inner {
+  border-radius: 10px !important;
+}
+
+/* ============ 卡片/表格玻璃协调 ============ */
+/* 卡片圆角裁剪：内部表格不再撑出直角 */
+.ant-card {
+  overflow: hidden;
+}
+/* 表格透明化：透出卡片玻璃底，避免纯白区块 */
+.ant-table,
+.ant-table-container,
+.ant-table-content,
+.ant-table-cell {
+  background: transparent !important;
+}
+.ant-table-thead > tr > th {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+.ant-table-tbody > tr:hover > td {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ============ 侧边菜单分组分隔（初始即有分割） ============ */
+.app-menu .ant-menu-item {
+  border-radius: 8px;
+  margin-block: 2px;
+}
+.app-menu .ant-menu-submenu-title {
+  border-radius: 8px;
+  margin-block: 2px;
+  font-weight: 600;
+}
+/* 每个顶级分组底部一条分隔线 */
+.app-menu > .ant-menu-item,
+.app-menu > .ant-menu-submenu {
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(120, 120, 140, 0.18);
+  margin-bottom: 6px;
+}
+.app-menu > .ant-menu-item:last-child,
+.app-menu > .ant-menu-submenu:last-child {
+  border-bottom: none;
+}
+
+/* ============ 采集管理：主机+显示器卡片 ============ */
+.collector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 620px);
+  gap: 28px;
+  justify-content: start;
+}
+
+.collector-host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 桌面布局：显示器组件 + 主机并排 */
+.collector-desk {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  width: 100%;
+}
+
+/* 显示器组件：屏幕在上、支架底座居中在下 */
+.collector-display {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 显示器边框 */
+.collector-monitor {
+  width: 100%;
+  background: linear-gradient(180deg, #3a4152 0%, #232838 100%);
+  border-radius: 14px;
+  padding: 10px 10px 14px;
+  box-shadow: 0 10px 24px rgba(31, 41, 55, 0.25);
+}
+
+/* 机架式服务器（参考企业级刀片机箱） */
+.collector-server {
+  width: 148px;
+  flex-shrink: 0;
+  position: relative;
+  background: linear-gradient(160deg, #3b4756 0%, #232c3a 55%, #1a2230 100%);
+  border-radius: 5px;
+  box-shadow: 0 10px 24px rgba(31, 41, 55, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 12px 14px;
+  gap: 8px;
+}
+/* 机架导轨耳 */
+.collector-server::before,
+.collector-server::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  width: 5px;
+  height: 46px;
+  border-radius: 2px;
+  background: #2c3646;
+}
+.collector-server::before { left: -4px; }
+.collector-server::after { right: -4px; }
+/* 刀片位：两排竖槽 */
+.srv-blades {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 3px;
+}
+.srv-blades i {
+  display: block;
+  height: 44px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #141c2a 0%, #1f2939 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+/* 散热网孔 */
+.srv-vent {
+  width: 100%;
+  height: 52px;
+  border-radius: 3px;
+  background-color: #131b29;
+  background-image: radial-gradient(rgba(148, 163, 184, 0.35) 1px, transparent 1.3px);
+  background-size: 5px 5px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+/* 散热风扇 */
+.srv-fans {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.srv-fans i {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #2f3a4e;
+  background:
+    radial-gradient(circle at center, #1a2230 30%, transparent 31%),
+    conic-gradient(#2f3a4e 0 40deg, #1a2230 40deg 120deg, #2f3a4e 120deg 160deg, #1a2230 160deg 240deg, #2f3a4e 240deg 280deg, #1a2230 280deg 360deg);
+}
+/* 电源仓 */
+.srv-psu {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+}
+.srv-psu i {
+  flex: 1;
+  height: 12px;
+  border-radius: 2px;
+  background: #101827;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.srv-leds {
+  display: flex;
+  gap: 5px;
+}
+.srv-leds i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: block;
+}
+.srv-label {
+  margin-top: auto;
+  font-family: Consolas, monospace;
+  font-size: 10px;
+  color: #64748b;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.srv-power {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #475569;
+}
+
+/* 屏幕：深色终端 */
+.collector-screen {
+  background: #0b1220;
+  border-radius: 8px;
+  padding: 12px 16px;
+  height: 240px;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #cbd5e1;
+}
+
+.screen-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+.screen-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.screen-name {
+  color: #e2e8f0;
+  font-weight: 600;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.screen-status {
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.screen-row {
+  display: flex;
+  gap: 10px;
+}
+.screen-row .k {
+  color: #64748b;
+  width: 52px;
+  flex-shrink: 0;
+}
+.screen-row .v {
+  color: #e2e8f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.screen-row .v.path {
+  color: #7dd3fc;
+}
+.screen-row .v + .k {
+  margin-left: auto;
+}
+
+.screen-error {
+  margin-top: 6px;
+  color: #f87171;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 支架与底座 */
+.collector-stand {
+  width: 26px;
+  height: 16px;
+  background: linear-gradient(180deg, #2b3242 0%, #1d2330 100%);
+}
+.collector-base {
+  width: 110px;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #3a4152 0%, #232838 100%);
+  box-shadow: 0 4px 10px rgba(31, 41, 55, 0.2);
+}
+
+/* 操作区 */
+.collector-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+/* ============ 壁纸缩略图交互 ============ */
+.wp-del {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.wp-thumb:hover .wp-del {
+  opacity: 1;
+}
+/* 整块上传入口 */
+.wp-upload {
+  width: 200px;
+  height: 120px;
+  border-radius: 10px;
+  border: 2px dashed rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.wp-upload:hover {
+  border-color: #1677ff;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* ============ 日期面板 / 抽屉 / 弹窗玻璃化（antd v6 未覆盖的组件） ============ */
+.ant-picker-dropdown .ant-picker-panel-container {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-radius: 14px !important;
+  box-shadow: 0 12px 32px rgba(31, 41, 55, 0.15) !important;
+}
+.ant-picker-dropdown .ant-picker-panel {
+  background: transparent !important;
+}
+/* antd v6 实测：Drawer 背景在 -section 元素，Modal 背景在 -container 元素，Modal 遮罩在 -root 下 */
+.ant-drawer .ant-drawer-section {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
+}
+.ant-drawer .ant-drawer-content-wrapper,
+.ant-drawer .ant-drawer-content {
+  background: transparent !important;
+}
+/* 遮罩调浅：磨砂才能透出壁纸而不是透出黑罩 */
+.ant-drawer .ant-drawer-mask,
+.ant-modal-root .ant-modal-mask {
+  background: rgba(15, 23, 42, 0.22) !important;
+}
+.ant-modal .ant-modal-container {
+  background: rgba(255, 255, 255, 0.68) !important;
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
+  border-radius: 14px !important;
+}
+.ant-modal .ant-modal-content,
+.ant-modal .ant-modal-header {
+  background: transparent !important;
+}
+
+/* ============ 报错详情代码块 ============ */
+.log-detail-pre {
+  background: rgba(11, 18, 32, 0.92);
+  color: #cbd5e1;
+  padding: 14px;
+  border-radius: 10px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  max-height: 320px;
+  overflow: auto;
+}
+
+/* ============ 菜单分组标题：选中子项时标题不加底色 ============ */
+.app-menu .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  background: transparent !important;
+}
+
+/* ============ 下拉浮层玻璃化（用户菜单/收缩菜单/选择器） ============ */
+.ant-dropdown .ant-dropdown-menu,
+.ant-select-dropdown,
+.ant-cascader-dropdown .ant-cascader-menu {
+  background: rgba(255, 255, 255, 0.68) !important;
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(31, 41, 55, 0.15) !important;
+}
+/* 收缩菜单弹出层（v6：弹出容器与内部菜单都要处理） */
+.ant-menu-submenu-popup {
+  background: transparent !important;
+}
+.ant-menu-submenu-popup .ant-menu {
+  background: rgba(255, 255, 255, 0.68) !important;
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(31, 41, 55, 0.15) !important;
+}
+.ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: rgba(22, 119, 255, 0.14);
+}
+
+/* ============ 填充按钮：初始即软色 + 光晕 ============ */
+.ant-btn-color-blue.ant-btn-variant-filled:not(:disabled) {
+  background: #b3d7ff;
+  color: #0958d9;
+  box-shadow: 0 3px 12px rgba(22, 119, 255, 0.3);
+}
+.ant-btn-color-blue.ant-btn-variant-filled:not(:disabled):hover {
+  background: #91caff;
+}
+.ant-btn-color-danger.ant-btn-variant-filled:not(:disabled) {
+  background: #ffccc7;
+  color: #cf1322;
+  box-shadow: 0 3px 12px rgba(255, 77, 79, 0.3);
+}
+.ant-btn-color-danger.ant-btn-variant-filled:not(:disabled):hover {
+  background: #ffa39e;
+}
+.ant-btn-color-green.ant-btn-variant-filled:not(:disabled) {
+  background: #b7eb8f;
+  color: #237804;
+  box-shadow: 0 3px 12px rgba(82, 196, 26, 0.28);
+}
+.ant-btn-color-green.ant-btn-variant-filled:not(:disabled):hover {
+  background: #95de64;
+}
+/* 主按钮初始光晕 */
+.ant-btn-primary:not(:disabled) {
+  box-shadow: 0 4px 14px rgba(22, 119, 255, 0.45);
+}
+
+/* ============ 默认按钮：柔和可见底（刷新等中性按钮） ============ */
+.ant-btn-default:not(:disabled) {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(100, 116, 139, 0.35);
+  box-shadow: 0 1px 3px rgba(31, 41, 55, 0.08);
+}
+.ant-btn-default:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* ============ 按钮玻璃光晕 ============ */
+.ant-btn {
+  transition: all 0.15s ease;
+}
+.ant-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 16px rgba(85, 85, 85, 0.12),
+    inset 0 0 4px 1px rgba(255, 255, 255, 0.4);
+}
+.ant-btn:active {
+  transform: translateY(0);
+}

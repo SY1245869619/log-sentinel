@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# Go Agent 编译产物（体积大，不入库）
+agent/dist/
+agent/logsentinel-agent.exe
+agent/agent-state.json
+node_modules/
+dist/
+*.log
+.idea/
+.vscode/
